@@ -1,24 +1,25 @@
-# Basic .NET 9 Console App
+# Dynamic String Expression Evaluation
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/mitch-b/dotnet-basic-console)
+There's more with [NCalc](https://github.com/ncalc/ncalc) and DynamicParameters and someone wrapped more around NCalc that might be useful ([PanoramicData.NCalcExtensions](https://github.com/panoramicdata/PanoramicData.NCalcExtensions)). 
 
-Yes, there are much less verbose starting projects. No, you do not need all this stuff to play with .NET.
+There are some annoyances with the default NCalc Parameters that you can't pass more than you use - and you must provide the deepest referenced object used in the expression. Perhaps with DynamicParameters this can be improved.
 
-Quickly clone this repository to get a .NET 9 console app which:
+The goal was to create a simple console app that can evaluate a string expression with a dynamic object, and compare some possible solutions.
 
-1. Has dependency injection usage examples ([DemoService](./ConsoleApp/Services/DemoService.cs))
-1. Docker container support
-1. Has GitHub actions to build a container
-1. Uses centralized package management
-1. Has a VSCode launch profile
-1. Has a devcontainer to launch in GitHub Codespaces or within VSCode itself as a remote container
-1. Example getting AccessToken from Azure AD following client credentials flow (for daemons)
-    * Built-in example assumes Azure App Registration has `Microsoft Graph : User.Read.All` application permission granted.
+```csharp
+var a = new DemoObject { Name = "A", Age = 30, Nested = new NestedDemoObject { Name = "A1", Age = 31 } };
+var b = new DemoObject { Name = "B", Age = 30, Nested = new NestedDemoObject { Name = "B1", Age = 41 } };
 
-## Build & Run as Docker container
+var trueSimpleExpression = "a.Name == \"A\" && a.Age < 50";
+var falseNestedExpression = "a.Name == \"A\" && (a.Nested.Age > 50 || b.Nested.Age > 50) "; // because nested ages are smaller
 
-```bash
-cd src/
-docker build -t dotnet-basic-console:latest .
-docker run --rm dotnet-basic-console:latest
+// pass in the objects with data, and the name they're referenced by in the string expression
+var embeddedObjects = new Dictionary<string, object> { { "a", a }, { "b", b } };
+
+var customResult = await _customExpressionService.EvaluateExpression<bool>(
+    expression, 
+    embeddedObjects);
+var nCalcResult = await _nCalcExpressionService.EvaluateExpression<bool>(
+    expression, 
+    embeddedObjects);
 ```

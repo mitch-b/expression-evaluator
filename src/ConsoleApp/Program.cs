@@ -26,6 +26,8 @@ var builder = Host.CreateDefaultBuilder(args)
         services.AddOptions<ConfidentialClientApplicationOptions>().BindConfiguration("EntraConfig");
         services.AddScoped<IClientCredentialService, ClientCredentialService>();
         services.AddScoped<IDemoService, DemoService>();
+        services.AddScoped<CustomExpressionService>();
+        services.AddScoped<NCalcExpressionService>();
         services.AddHttpClient("GraphApi", httpClient =>
         {
             httpClient.BaseAddress = new Uri("https://graph.microsoft.com/");
