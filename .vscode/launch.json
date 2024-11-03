@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Console",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/ConsoleApp/bin/Debug/net9.0/ConsoleApp.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/ConsoleApp",
+      "stopAtEntry": false,
+      "console": "internalConsole"
+    },
+    {
+      "name": "Benchmark",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build:release",
+      "program": "${workspaceFolder}/src/ConsoleApp/bin/Release/net9.0/ConsoleApp.dll",
+      "args": [ "--benchmark", "true" ],
+      "cwd": "${workspaceFolder}/src/ConsoleApp",
+      "stopAtEntry": false,
+      "console": "internalConsole"
+    }
+  ]
+}
