@@ -13,7 +13,7 @@ public class NCalcExpressionService(ILogger<NCalcExpressionService> logger,
     private readonly ILogger<NCalcExpressionService> _logger = logger;
     private readonly IOptions<ConsoleAppSettings> _consoleAppSettings = consoleAppSettings;
 
-    public async Task<T> EvaluateExpression<T>(string expression, IDictionary<string, object> embeddedObjects)
+    public async Task<T?> EvaluateExpression<T>(string expression, IDictionary<string, object> embeddedObjects)
     {
         var flattenedObjects = FlattenObject(embeddedObjects);
         var parameters = ExtractParameters(expression);

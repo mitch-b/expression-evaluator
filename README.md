@@ -1,10 +1,12 @@
 # Dynamic String Expression Evaluation
 
-There's more with [NCalc](https://github.com/ncalc/ncalc) and DynamicParameters and someone wrapped more around NCalc that might be useful ([PanoramicData.NCalcExtensions](https://github.com/panoramicdata/PanoramicData.NCalcExtensions)). 
+Demo project to evaluate string expressions using different libraries to evaluate options.
 
-There are some annoyances with the default NCalc Parameters that you can't pass more than you use - and you must provide the deepest referenced object used in the expression. Perhaps with DynamicParameters this can be improved.
+* [Custom implementation](./src/ConsoleApp/Services/CustomExpressionService.cs)
+* [NCalc implementation](./src/ConsoleApp/Services/NCalcExpressionService.cs)
+* [System.Linq.Dynamic.Core implementation](./src/ConsoleApp/Services/LinqExpressionService.cs)
 
-The goal was to create a simple console app that can evaluate a string expression with a dynamic object, and compare some possible solutions.
+## Examples:
 
 ```csharp
 var a = new DemoObject { Name = "A", Age = 30, Nested = new NestedDemoObject { Name = "A1", Age = 31 } };
@@ -22,4 +24,23 @@ var customResult = await _customExpressionService.EvaluateExpression<bool>(
 var nCalcResult = await _nCalcExpressionService.EvaluateExpression<bool>(
     expression, 
     embeddedObjects);
+var linqResult = await _linqExpressionService.EvaluateExpression<bool>(
+    expression, 
+    embeddedObjects);
 ```
+
+## NCalc Thoughts
+
+There's more with [NCalc](https://github.com/ncalc/ncalc) and DynamicParameters and someone wrapped more around NCalc that might be useful ([PanoramicData.NCalcExtensions](https://github.com/panoramicdata/PanoramicData.NCalcExtensions)). 
+
+There are some annoyances with the default NCalc Parameters that you can't pass more than you use - and you must provide the deepest referenced object used in the expression. Perhaps with DynamicParameters this can be improved.
+
+The goal was to create a simple console app that can evaluate a string expression with a dynamic object, and compare some possible solutions.
+
+## Linq Thoughts
+
+Least amount of custom code for this is what I like. Will have to consider what extensions are needed. This allows nested object resolution out of the box! 
+
+## Custom Thoughts
+
+Just don't, really. 

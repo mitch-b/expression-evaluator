@@ -20,7 +20,7 @@ public class CustomExpressionService(ILogger<CustomExpressionService> logger,
     private static readonly ConcurrentDictionary<string, Script<object>> _scriptCache = new();
     private static readonly ConcurrentDictionary<Type, PropertyInfo[]> _propertyCache = new();
     
-    public async Task<T> EvaluateExpression<T>(string expression, IDictionary<string, object> embeddedObjects)
+    public async Task<T?> EvaluateExpression<T>(string expression, IDictionary<string, object> embeddedObjects)
     {
         var replacedExpression = expression;
         try

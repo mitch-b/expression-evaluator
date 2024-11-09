@@ -28,6 +28,7 @@ var builder = Host.CreateDefaultBuilder(args)
         services.AddScoped<IDemoService, DemoService>();
         services.AddScoped<CustomExpressionService>();
         services.AddScoped<NCalcExpressionService>();
+        services.AddScoped<LinqExpressionService>();
         services.AddHttpClient("GraphApi", httpClient =>
         {
             httpClient.BaseAddress = new Uri("https://graph.microsoft.com/");
