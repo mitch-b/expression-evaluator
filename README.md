@@ -1,5 +1,7 @@
 # Dynamic String Expression Evaluation
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/mitch-b/expression-evaluator)
+
 Demo project to evaluate string expressions using different libraries to evaluate options.
 
 * [Custom implementation](./src/ConsoleApp/Services/CustomExpressionService.cs)

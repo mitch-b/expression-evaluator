@@ -1,13 +1,9 @@
+using ConsoleApp.Exceptions;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using Microsoft.Extensions.Logging;
 
 namespace ConsoleApp.Services;
-
-public class ExpressionException : Exception
-{
-    public ExpressionException(string message) : base(message) { }
-}
 
 public class LinqExpressionService(ILogger<LinqExpressionService> logger) : IExpressionService
 {
@@ -15,7 +11,9 @@ public class LinqExpressionService(ILogger<LinqExpressionService> logger) : IExp
 
     public async Task<T?> EvaluateExpression<T>(string expression, IDictionary<string, object> embeddedObjects)
     {
-        _logger.LogInformation("Evaluating expression: {Expression} with embedded objects: {EmbeddedObjects}", expression, embeddedObjects.Keys);
+        _logger.LogInformation("Evaluating expression: {Expression} with embedded objects: {EmbeddedObjects}", 
+            expression, 
+            embeddedObjects.Select(kvp => $"{kvp.Key}=[{kvp.Value.GetType()}]"));
 
         var expressionParameters = embeddedObjects
             .Select(kvp => Expression.Parameter(kvp.Value.GetType(), kvp.Key))
